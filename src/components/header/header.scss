@@ -1,0 +1,93 @@
+@import "../../variables.scss";
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    user-select: none;
+    &__heading {
+        font-size: 32px;
+        padding: 0 0 0 7px;
+    }
+}
+
+.theme-toggler {
+    display: grid;
+    grid-template-columns: repeat(2, 70px);
+    grid-template-rows: repeat(2, 26px);
+    align-items: end;
+    gap: 3px;
+    font-size: 14px;
+    @media (max-width: 600px) {
+        font-size: 12px;
+    }
+    &__heading {
+        text-transform: uppercase;
+        align-self: center;
+        @media (max-width: 600px) {
+            justify-self: center;
+        }
+    }
+
+    &__list {
+        display: flex;
+        justify-content: space-around;
+    }
+
+    &__btn {
+        width: 70px;
+        height: 26px;
+        border-radius: 10px;
+        position: relative;
+        @media (max-width: 600px) {
+            border-radius: 50px;
+        }
+    }
+    &__btn-circle {
+        position: absolute;
+        top: 5px;
+        left: 5px;
+        display: inline-block;
+        width: 15px;
+        border-radius: 10px;
+        height: 15px;
+        transition: all 0.3s;
+    }
+}
+
+.header-theme1 {
+    color: $theme1Color2;
+    .theme-toggler {
+        &__btn {
+            background-color: $theme1KeypadBg;
+            &-circle {
+                background-color: $theme1Key2;
+                left: 5px;
+            }
+        }
+    }
+}
+.header-theme2 {
+    color: $theme2Color1;
+    .theme-toggler {
+        &__btn {
+            background-color: $theme2KeypadBg;
+            &-circle {
+                background-color: $theme2Key2;
+                left: 25px;
+            }
+        }
+    }
+}
+.header-theme3 {
+    color: $theme3Color1;
+    .theme-toggler {
+        &__btn {
+            background-color: $theme3KeypadBg;
+            &-circle {
+                background-color: $theme3Key2;
+                left: 50px;
+            }
+        }
+    }
+}
