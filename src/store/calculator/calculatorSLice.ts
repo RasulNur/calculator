@@ -3,11 +3,13 @@ import { createSlice } from "@reduxjs/toolkit";
 export interface ICalculatorState {
     theme: number;
     value: string;
+    operator: string;
 }
 
 const initialState: ICalculatorState = {
     theme: 1,
-    value: "",
+    value: "0",
+    operator: "",
 };
 
 export const calculatorSlice = createSlice({
@@ -19,6 +21,9 @@ export const calculatorSlice = createSlice({
         },
         setValue: (state, { payload }) => {
             state.value = payload;
+        },
+        setOperator: (state, { payload }) => {
+            state.operator = payload;
         },
     },
 });

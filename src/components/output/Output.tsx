@@ -20,7 +20,7 @@ const Output: FC = () => {
                 type="text"
                 readOnly
                 // onChange={(e) => setValue(e.target.value)}
-                value={value?.toLocaleString("en-US")}
+                value={Number(value).toLocaleString("en-US")}
             />
         </div>
     );

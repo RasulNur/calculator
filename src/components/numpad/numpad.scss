@@ -10,26 +10,28 @@
     }
     &__row {
         display: grid;
-        grid-template-rows: repeat(5, 59px);
+        grid-template-rows: repeat(5, 64px);
         grid-template-columns: repeat(4, 100px);
         justify-content: space-between;
-        column-gap: 26px;
-        row-gap: 30px;
+        gap: 25px;
+
         @media (max-width: 600px) {
             grid-template-rows: repeat(5, 60px);
             grid-template-columns: repeat(4, 60px);
-            column-gap: 13px;
-            row-gap: 16px;
+            gap: 14px;
         }
     }
 
     &__btn {
+        width: 100%;
+        height: 59px;
         border-radius: 10px;
         text-transform: uppercase;
         display: flex;
         justify-content: center;
         align-items: center;
-        transition: all 0.2s;
+        transition: background-color 0.2s;
+
         user-select: none;
 
         &:last-child,
@@ -45,28 +47,34 @@
         &:nth-child(4),
         &:nth-last-child(2) {
             background-color: $theme1Key3;
-            box-shadow: 0px 5px 0px $theme1Key3Shadow;
+            // box-shadow: 0px 5px 0px $theme1Key3Shadow;
             color: $theme1Color2;
-            &:hover {
-                background-color: $theme1Key3Hover;
+            @media (min-width: 601px) {
+                &:hover {
+                    background-color: $theme1Key3Hover;
+                }
             }
         }
         &:last-child {
             background-color: $theme1Key2;
-            box-shadow: 0px 5px 0px $theme1Key2Shadow;
+            // box-shadow: 0px 5px 0px $theme1Key2Shadow;
             color: $theme1Color2;
-            &:hover {
-                background-color: $theme1Key2Hover;
+            @media (min-width: 601px) {
+                &:hover {
+                    background-color: $theme1Key2Hover;
+                }
             }
         }
         color: $theme1Color1;
         background-color: $theme1Key1;
-        box-shadow: 0px 5px 0px $theme1Key1Shadow;
-        &:hover {
-            background-color: $theme1Key1Hover;
+        // box-shadow: 0px 5px 0px $theme1Key1Shadow;
+        @media (min-width: 601px) {
+            &:hover {
+                background-color: $theme1Key1Hover;
+            }
         }
     }
-    .shadow-1 {
+    .shadow {
         &:nth-child(4),
         &:nth-last-child(2) {
             box-shadow: 0px 5px 0px $theme1Key3Shadow;
@@ -85,25 +93,31 @@
         &:nth-child(4),
         &:nth-last-child(2) {
             background-color: $theme2Key3;
-            box-shadow: 0px 5px 0px $theme2Key3Shadow;
+            // box-shadow: 0px 5px 0px $theme2Key3Shadow;
             color: $theme2Color2;
-            &:hover {
-                background-color: $theme2Key3Hover;
+            @media (min-width: 601px) {
+                &:hover {
+                    background-color: $theme2Key3Hover;
+                }
             }
         }
         &:last-child {
             background-color: $theme2Key2;
-            box-shadow: 0px 5px 0px $theme2Key2Shadow;
+            // box-shadow: 0px 5px 0px $theme2Key2Shadow;
             color: $theme2Color2;
-            &:hover {
-                background-color: $theme2Key2Hover;
+            @media (min-width: 601px) {
+                &:hover {
+                    background-color: $theme2Key2Hover;
+                }
             }
         }
         color: $theme2Color1;
         background-color: $theme2Key1;
-        box-shadow: 0px 5px 0px $theme2Key1Shadow;
-        &:hover {
-            background-color: $theme2Key1Hover;
+        // box-shadow: 0px 5px 0px $theme2Key1Shadow;
+        @media (min-width: 601px) {
+            &:hover {
+                background-color: $theme2Key1Hover;
+            }
         }
     }
     .shadow {
@@ -118,31 +132,38 @@
         box-shadow: 0px 5px 0px $theme2Key1Shadow;
     }
 }
+
 .numpad-theme3 {
     background-color: $theme3KeypadBg;
     button {
         &:nth-child(4),
         &:nth-last-child(2) {
             background-color: $theme3Key1;
-            box-shadow: 0px 5px 0px $theme3Key1Shadow;
+            // box-shadow: 0px 5px 0px $theme3Key1Shadow;
             color: $theme3Color2;
-            &:hover {
-                background-color: $theme3Key1Hover;
+            @media (min-width: 601px) {
+                &:hover {
+                    background-color: $theme3Key1Hover;
+                }
             }
         }
         &:last-child {
             background-color: $theme3Key2;
-            box-shadow: 0px 5px 0px $theme3Key2Shadow;
+            // box-shadow: 0px 5px 0px $theme3Key2Shadow;
             color: $theme3Color3;
-            &:hover {
-                background-color: $theme3Key2Hover;
+            @media (min-width: 601px) {
+                &:hover {
+                    background-color: $theme3Key2Hover;
+                }
             }
         }
         color: $theme3Color1;
         background-color: $theme3Key3;
-        box-shadow: 0px 5px 0px $theme3Key3Shadow;
-        &:hover {
-            background-color: $theme3Key3Hover;
+        // box-shadow: 0px 5px 0px $theme3Key3Shadow;
+        @media (min-width: 601px) {
+            &:hover {
+                background-color: $theme3Key3Hover;
+            }
         }
     }
     .shadow {
