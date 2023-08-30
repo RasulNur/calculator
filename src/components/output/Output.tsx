@@ -4,7 +4,7 @@ import "./output.scss";
 import { useAppSelector } from "../../hooks/reduxHooks";
 
 const Output: FC = () => {
-    const { theme, value } = useAppSelector((state) => state.calculator);
+    const { theme, inputValue } = useAppSelector((state) => state.calculator);
 
     return (
         <div
@@ -19,8 +19,7 @@ const Output: FC = () => {
                 className="output__input"
                 type="text"
                 readOnly
-                // onChange={(e) => setValue(e.target.value)}
-                value={Number(value).toLocaleString("en-US")}
+                value={inputValue || "0"}
             />
         </div>
     );

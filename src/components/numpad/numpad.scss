@@ -47,7 +47,6 @@
         &:nth-child(4),
         &:nth-last-child(2) {
             background-color: $theme1Key3;
-            // box-shadow: 0px 5px 0px $theme1Key3Shadow;
             color: $theme1Color2;
             @media (min-width: 601px) {
                 &:hover {
@@ -57,7 +56,6 @@
         }
         &:last-child {
             background-color: $theme1Key2;
-            // box-shadow: 0px 5px 0px $theme1Key2Shadow;
             color: $theme1Color2;
             @media (min-width: 601px) {
                 &:hover {
@@ -67,7 +65,6 @@
         }
         color: $theme1Color1;
         background-color: $theme1Key1;
-        // box-shadow: 0px 5px 0px $theme1Key1Shadow;
         @media (min-width: 601px) {
             &:hover {
                 background-color: $theme1Key1Hover;
@@ -93,7 +90,6 @@
         &:nth-child(4),
         &:nth-last-child(2) {
             background-color: $theme2Key3;
-            // box-shadow: 0px 5px 0px $theme2Key3Shadow;
             color: $theme2Color2;
             @media (min-width: 601px) {
                 &:hover {
@@ -103,7 +99,6 @@
         }
         &:last-child {
             background-color: $theme2Key2;
-            // box-shadow: 0px 5px 0px $theme2Key2Shadow;
             color: $theme2Color2;
             @media (min-width: 601px) {
                 &:hover {
@@ -113,7 +108,6 @@
         }
         color: $theme2Color1;
         background-color: $theme2Key1;
-        // box-shadow: 0px 5px 0px $theme2Key1Shadow;
         @media (min-width: 601px) {
             &:hover {
                 background-color: $theme2Key1Hover;
@@ -139,7 +133,6 @@
         &:nth-child(4),
         &:nth-last-child(2) {
             background-color: $theme3Key1;
-            // box-shadow: 0px 5px 0px $theme3Key1Shadow;
             color: $theme3Color2;
             @media (min-width: 601px) {
                 &:hover {
@@ -149,7 +142,6 @@
         }
         &:last-child {
             background-color: $theme3Key2;
-            // box-shadow: 0px 5px 0px $theme3Key2Shadow;
             color: $theme3Color3;
             @media (min-width: 601px) {
                 &:hover {
@@ -159,7 +151,6 @@
         }
         color: $theme3Color1;
         background-color: $theme3Key3;
-        // box-shadow: 0px 5px 0px $theme3Key3Shadow;
         @media (min-width: 601px) {
             &:hover {
                 background-color: $theme3Key3Hover;

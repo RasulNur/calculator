@@ -1,14 +1,23 @@
-import { FC, MouseEvent, MouseEventHandler, useEffect, useState } from "react";
+import { FC, MouseEvent } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
+import toast from "react-hot-toast";
 
 import "./numpad.scss";
-import { setValue } from "../../store/calculator/calculatorSLice";
+import { setInputValue } from "../../store/calculator/calculatorSLice";
 
 const Numpad: FC = () => {
+    const notify = (msg: string) =>
+        toast.error(msg, {
+            duration: 2500,
+            position: "top-right",
+            style: { background: "#e1e5e7" },
+        });
+
     const dispatch = useAppDispatch();
-    const [buttonTarget, setButtonTarget] = useState<EventTarget>();
-    const { theme, value } = useAppSelector((state) => state.calculator);
-    const operatorsArr = ["+", "-", "*", "/", "=", "."];
+    const { theme, inputValue } = useAppSelector((state) => state.calculator);
+
+    const ops = ["+", "-", "*", "/", "."];
+
     const numpadData = [
         { id: "7", keycode: [103, 55], value: 7 },
         { id: "8", keycode: [104, 56], value: 8 },
@@ -17,32 +26,52 @@ const Numpad: FC = () => {
         { id: "4", keycode: [100, 52], value: 4 },
         { id: "5", keycode: [101, 53], value: 5 },
         { id: "6", keycode: [102, 54], value: 6 },
-        { id: "+", keycode: [107], value: "operator" },
+        { id: "+", keycode: [107], value: "+" },
         { id: "1", keycode: [97, 49], value: 1 },
         { id: "2", keycode: [98, 50], value: 2 },
         { id: "3", keycode: [99, 51], value: 3 },
-        { id: "-", keycode: [109], value: "operator" },
-        { id: ".", keycode: [110, 190], value: "operator" },
+        { id: "-", keycode: [109], value: "-" },
+        { id: ".", keycode: [110, 190], value: "." },
         { id: "0", keycode: [96, 48], value: 0 },
-        { id: "/", keycode: [111], value: "operator" },
-        { id: "×", keycode: [106], value: "operator" },
-
+        { id: "/", keycode: [111], value: "/" },
+        { id: "×", keycode: [106], value: "*" },
         { id: "reset", keycode: [46], value: "reset" },
-        { id: "=", keycode: [13], value: "operator" },
+        { id: "=", keycode: [13], value: "=" },
     ];
 
-    const handleClick = (
-        e: MouseEvent<HTMLButtonElement>,
-        id: string,
-        keycode: number[],
-        elValue: string | number
-    ) => {
-        // if (elValue === "reset") dispatch(setValue(""));
-        // if (elValue === "") {}
-        // if (typeof elValue === "string") {
-        // }
-        dispatch(setValue(Number(value) + Number(id)));
-        // setButtonTarget(e.currentTarget);
+    const handleClick = (elId: string, elValue: string | number) => {
+        if (elId === "del") {
+            dispatch(setInputValue(inputValue.slice(0, -1)));
+        }
+        if (elId === "reset") {
+            dispatch(setInputValue(""));
+        }
+        if (elId === "=" && inputValue.length !== 0) {
+            try {
+                dispatch(setInputValue(String(eval(inputValue))));
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            } catch (error: any) {
+                if (
+                    error.message ==
+                    "Octal literals are not allowed in strict mode."
+                ) {
+                    notify("Remove the zeros before the number");
+                }
+                if (error.message == "Unexpected end of input") {
+                    notify("Remove operand or write number after operand");
+                }
+            }
+        }
+        if (elId !== "=" && elId !== "reset" && elId !== "del") {
+            if (
+                (ops.includes(elId) && inputValue === "") ||
+                (ops.includes(elId) && ops.includes(inputValue.slice(-1)))
+            ) {
+                return;
+            }
+
+            dispatch(setInputValue(inputValue.replace(/^0+/, "") + elValue));
+        }
     };
 
     const handleMouseEventButton = (
@@ -82,9 +111,7 @@ const Numpad: FC = () => {
                             }}
                             key={el.id}
                             className="numpad__btn shadow"
-                            onClick={(e) =>
-                                handleClick(e, el.id, el.keycode, el.value)
-                            }>
+                            onClick={() => handleClick(el.id, el.value)}>
                             {el.id}
                         </button>
                     );
