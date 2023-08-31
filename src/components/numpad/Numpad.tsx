@@ -1,9 +1,15 @@
-import { FC, MouseEvent } from "react";
+import { FC, MouseEvent, useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
 import toast from "react-hot-toast";
 
 import "./numpad.scss";
 import { setInputValue } from "../../store/calculator/calculatorSLice";
+
+interface IKey {
+    value: string;
+    type: string;
+    key: string;
+}
 
 const Numpad: FC = () => {
     const notify = (msg: string) =>
@@ -12,65 +18,65 @@ const Numpad: FC = () => {
             position: "top-right",
             style: { background: "#e1e5e7" },
         });
-
     const dispatch = useAppDispatch();
     const { theme, inputValue } = useAppSelector((state) => state.calculator);
-
     const ops = ["+", "-", "*", "/", "."];
-
-    const numpadData = [
-        { id: "7", keycode: [103, 55], value: 7 },
-        { id: "8", keycode: [104, 56], value: 8 },
-        { id: "9", keycode: [105, 57], value: 9 },
-        { id: "del", keycode: [8], value: "delete" },
-        { id: "4", keycode: [100, 52], value: 4 },
-        { id: "5", keycode: [101, 53], value: 5 },
-        { id: "6", keycode: [102, 54], value: 6 },
-        { id: "+", keycode: [107], value: "+" },
-        { id: "1", keycode: [97, 49], value: 1 },
-        { id: "2", keycode: [98, 50], value: 2 },
-        { id: "3", keycode: [99, 51], value: 3 },
-        { id: "-", keycode: [109], value: "-" },
-        { id: ".", keycode: [110, 190], value: "." },
-        { id: "0", keycode: [96, 48], value: 0 },
-        { id: "/", keycode: [111], value: "/" },
-        { id: "×", keycode: [106], value: "*" },
-        { id: "reset", keycode: [46], value: "reset" },
-        { id: "=", keycode: [13], value: "=" },
+    const numpadData: IKey[] = [
+        { value: "7", type: "number", key: "7" },
+        { value: "8", type: "number", key: "8" },
+        { value: "9", type: "number", key: "9" },
+        { value: "del", type: "action", key: "Backspace" },
+        { value: "4", type: "number", key: "4" },
+        { value: "5", type: "number", key: "5" },
+        { value: "6", type: "number", key: "6" },
+        { value: "+", type: "operand", key: "+" },
+        { value: "1", type: "number", key: "1" },
+        { value: "2", type: "number", key: "2" },
+        { value: "3", type: "number", key: "3" },
+        { value: "-", type: "operand", key: "-" },
+        { value: ".", type: "operand", key: "." },
+        { value: "0", type: "number", key: "0" },
+        { value: "/", type: "operand", key: "/" },
+        { value: "*", type: "operand", key: "*" },
+        { value: "reset", type: "action", key: "Delete" },
+        { value: "=", type: "action", key: "Enter" },
     ];
 
-    const handleClick = (elId: string, elValue: string | number) => {
-        if (elId === "del") {
+    useEffect(() => {}, [inputValue]);
+    const handleClick = (el: IKey) => {
+        if (el.key === "Backspace") {
             dispatch(setInputValue(inputValue.slice(0, -1)));
         }
-        if (elId === "reset") {
+        if (el.key === "Delete") {
             dispatch(setInputValue(""));
         }
-        if (elId === "=" && inputValue.length !== 0) {
+        if (el.key === "Enter" && inputValue.length !== 0) {
             try {
-                dispatch(setInputValue(String(eval(inputValue))));
+                let res = eval(inputValue);
+
+                if (String(res).split(".")[1]?.length > 5) {
+                    res = res.toFixed(5);
+                }
+                dispatch(setInputValue(String(res)));
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
             } catch (error: any) {
-                if (
-                    error.message ==
-                    "Octal literals are not allowed in strict mode."
-                ) {
-                    notify("Remove the zeros before the number");
-                }
-                if (error.message == "Unexpected end of input") {
-                    notify("Remove operand or write number after operand");
-                }
+                notify("Erorr");
+                dispatch(setInputValue("Error!"));
             }
         }
-        if (elId !== "=" && elId !== "reset" && elId !== "del") {
+        if (
+            el.key !== "Enter" &&
+            el.key !== "Delete" &&
+            el.key !== "Backspace"
+        ) {
             if (
-                (ops.includes(elId) && inputValue === "") ||
-                (ops.includes(elId) && ops.includes(inputValue.slice(-1)))
+                (ops.includes(el.value) && inputValue === "") ||
+                (ops.includes(el.value) && ops.includes(inputValue.slice(-1)))
             ) {
                 return;
             }
 
-            dispatch(setInputValue(inputValue.replace(/^0+/, "") + elValue));
+            dispatch(setInputValue(inputValue.replace(/^0+/, "") + el.value));
         }
     };
 
@@ -89,6 +95,21 @@ const Numpad: FC = () => {
             }
         }
     };
+
+    useEffect(() => {
+        const keyDownHandler = (e: KeyboardEvent) => {
+            const key = numpadData.filter((el) => el.key === e.key);
+            if (key[0]) {
+                e.preventDefault();
+                handleClick(key[0]);
+            }
+        };
+        document.addEventListener("keydown", keyDownHandler);
+
+        return () => {
+            document.removeEventListener("keydown", keyDownHandler);
+        };
+    });
 
     return (
         <div
@@ -109,10 +130,10 @@ const Numpad: FC = () => {
                             onMouseUp={(e) => {
                                 handleMouseEventButton(e, "up");
                             }}
-                            key={el.id}
+                            key={el.value}
                             className="numpad__btn shadow"
-                            onClick={() => handleClick(el.id, el.value)}>
-                            {el.id}
+                            onClick={() => handleClick(el)}>
+                            {el.value}
                         </button>
                     );
                 })}
